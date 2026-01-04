@@ -1,0 +1,77 @@
+sudo add-apt-repository ppa:flatpak/stable -y;
+sudo apt update;
+sudo apt upgrade;
+sudo apt install audacity gimp krita inkscape kdenlive vlc gcin gnome-tweaks kazam libreoffice-base blender okular kate recoll vnstat yt-dlp chromium -y;
+#Flatpak JASP and Zotero
+if [ "$(lsb_release -cs)" = "focal" ]; then 
+sudo add-apt-repository ppa:flatpak/stable -y;
+sudo apt update;
+
+elif [ "$(lsb_release -cs)" = "jammy" ]; then 
+sudo add-apt-repository ppa:flatpak/stable -y;
+sudo apt update;
+
+fi;
+
+#QGIS
+sudo apt install gnupg software-properties-common;
+sudo mkdir -m755 -p /etc/apt/keyrings;
+sudo wget -O /etc/apt/keyrings/qgis-archive-keyring.gpg https://download.qgis.org/downloads/qgis-archive-keyring.gpg;
+echo "Types: deb deb-src
+URIs: https://qgis.org/debian
+Suites:$(lsb_release -cs)
+Architectures: amd64
+Components: main
+Signed-By: /etc/apt/keyrings/qgis-archive-keyring.gpg" > qgis.sources;
+sudo cp qgis.sources /etc/apt/sources.list.d/;
+sudo apt update;
+sudo apt install qgis -y;
+
+sudo add-apt-repository ppa:flatpak/stable -y;
+sudo apt update;
+
+sudo apt install flatpak -y;
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo;
+flatpak install flathub org.jaspstats.JASP -y;
+flatpak run org.jaspstats.JASP;
+flatpak install flathub org.zotero.Zotero -y;
+flatpak run org.zotero.Zotero
+
+
+if [ "$(lsb_release -cs)" = "bullseye" ]; then 
+sudo apt install gimp krita inkscape kdenlive vlc gnome-tweak-tool kazam okular kate nextcloud-desktop spyder nextcloud-desktop vnstat audacity spyder jupyter-notebook python3-pip -y;
+sudo apt install youtube-dl chromium; 
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7';
+
+sudo add-apt-repository "deb http://cloud.r-project.org/bin/linux/debian bullseye-cran40/";
+sudo apt install r-base;
+sudo apt install libatlas3-base libopenblas-base;
+sudo apt install r-cran-boot r-cran-class r-cran-cluster r-cran-codetools r-cran-foreign r-cran-kernsmooth r-cran-lattice r-cran-mass r-cran-matrix r-cran-mgcv r-cran-nlme r-cran-nnet r-cran-rpart r-cran-spatial r-cran-survival
+
+elif [ "$(lsb_release -cs)" = "focal" ]; then 
+sudo apt install gimp krita inkscape kdenlive vlc gnome-tweak-tool kazam okular kate nextcloud-desktop spyder nextcloud-desktop vnstat audacity spyder jupyter-notebook python3-pip -y;
+sudo wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc;
+sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/";
+sudo add-apt-repository ppa:c2d4u.team/c2d4u4.0+ -y;
+sudo apt install r-cran-tidyverse r-cran-rstan gcin -y;
+
+elif [ "$(lsb_release -cs)" = "jammy" ]; then 
+sudo apt install gimp krita inkscape kdenlive vlc gnome-tweaks kazam okular kate nextcloud-desktop spyder nextcloud-desktop vnstat audacity spyder jupyter-notebook python3-pip -y;
+sudo wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc;
+sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/";
+sudo add-apt-repository ppa:c2d4u.team/c2d4u4.0+ -y;
+sudo apt install r-cran-tidyverse r-cran-rstan gcin -y;
+
+fi;
+# R common needs
+sudo apt install r-cran-rstan ;sudo  apt install  r-cran-tidyverse cmake libharfbuzz-dev libfribidi-dev libfreetype-dev libpng-dev libtiff5-dev libjpeg-dev libssl-dev -y;
+sudo apt install arfbuzz freetype2 fribidi;
+
+
+#RStudio
+#wget https://download1.rstudio.org/electron/bionic/amd64/rstudio-2023.03.1-446-amd64.deb;
+#sudo dpkg -i rstudio-2023.03.1-446-amd64.deb;
+#sudo apt install -f -y;
+
+
+
